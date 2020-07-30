@@ -33,6 +33,7 @@ classdef tinstall < matlab.unittest.TestCase
             expected = ['/usr/local/MATLAB/R' version('-release')];
             testCase.verifyThat(matlabroot(), IsEqualTo(expected));
         end
+        
         function testRootPathWindows(testCase)
             testCase.assumeThat(@ispc, ReturnsTrue, 'Runs only on Windows');
             expected = ['C:\Program Files\MATLAB\R' version('-release')];

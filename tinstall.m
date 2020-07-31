@@ -22,24 +22,6 @@ classdef tinstall < matlab.unittest.TestCase
             testCase.verifyThat(logical(status), IsFalse, [restricted ' should not checkout']);
         end
         
-        function testRootPathMac(testCase)
-            testCase.assumeThat(@ismac, ReturnsTrue, 'Runs only on mac');
-            expected = ['/Applications/MATLAB_R'  version('-release') '.app'];
-            testCase.verifyThat(matlabroot(), IsEqualTo(expected));
-        end
-        
-        function testRootPathLinux(testCase)
-            testCase.assumeThat(@() isunix && ~ismac, ReturnsTrue, 'Runs only on linux');
-            expected = ['/usr/local/MATLAB/R' version('-release')];
-            testCase.verifyThat(matlabroot(), IsEqualTo(expected));
-        end
-        
-        function testRootPathWindows(testCase)
-            testCase.assumeThat(@ispc, ReturnsTrue, 'Runs only on Windows');
-            expected = ['C:\Program Files\MATLAB\R' version('-release')];
-            testCase.verifyThat(matlabroot(), IsEqualTo(expected));
-        end
-        
         function testRunExample(testCase, example)
             meta = findExample(example);
             testCase.applyFixture(PathFixture(meta.componentDir));

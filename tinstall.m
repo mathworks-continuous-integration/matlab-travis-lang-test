@@ -49,10 +49,22 @@ classdef tinstall < matlab.unittest.TestCase
             startingFigs = findall(groot, 'Type','figure');
             testCase.addTeardown(@() close(setdiff(findall(groot, 'Type','figure'), startingFigs)));
             
-            run(fullfile(meta.componentDir, 'main', meta.main));
+            [log, ex] = evalc('runDemo(fullfile(meta.componentDir, ''main'', meta.main));');
+            if ~isempty(ex)
+                disp(log);
+                rethrow(ex);
+            end
         end
     end
     
+end
+
+function ex = runDemo(demo) %#ok<DEFNU> evalc
+try
+run(demo)
+ex = MException.empty;
+catch ex
+end
 end
 
 % imports

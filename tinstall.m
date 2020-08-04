@@ -14,34 +14,40 @@ classdef tinstall < matlab.unittest.TestCase
     methods (Test)
         function testCheckoutAllowedLicense(testCase, allowed)
             [status, msg] = license('checkout', allowed);
-            testCase.assertTrue(logical(status), msg);
+            testCase.verifyThat(logical(status), IsTrue, msg);
         end
         
         function testFailToCheckoutRestrictedLicense(testCase, restricted)
             status = license('checkout', restricted);
-            testCase.assertFalse(logical(status), [restricted ' should not checkout']);
-        end
-
-        function testRootPath(testCase)
-            release = version('-release');
-            if ismac()
-                expected = ['/Applications/MATLAB_R' release '.app'];
-            elseif isunix()
-                expected = ['/usr/local/MATLAB/R' release];
-            elseif ispc()
-                expected = ['C:\Program Files\MATLAB\R' release];
-            end
-            testCase.assertEqual(matlabroot(), expected)
+            testCase.verifyThat(logical(status), IsFalse, [restricted ' should not checkout']);
         end
         
         function testRunExample(testCase, example)
-            try
-                meta = findExample(example);
-                testCase.applyFixture(matlab.unittest.fixtures.PathFixture(meta.componentDir));
-                run(fullfile(meta.componentDir, 'main', meta.main));
-            catch e
-                testCase.assertFail(e.message);
-            end
+            meta = findExample(example);
+            testCase.applyFixture(PathFixture(meta.componentDir));
+            
+            startingFigs = findall(groot, 'Type','figure');
+            testCase.addTeardown(@() close(setdiff(findall(groot, 'Type','figure'), startingFigs)));
+            
+            run(fullfile(meta.componentDir, 'main', meta.main));
         end
     end
+    
+end
+
+% imports
+function c = IsEqualTo(varargin)
+c = matlab.unittest.constraints.IsEqualTo(varargin{:});
+end
+function c = IsTrue(varargin)
+c = matlab.unittest.constraints.IsTrue(varargin{:});
+end
+function c = IsFalse(varargin)
+c = matlab.unittest.constraints.IsFalse(varargin{:});
+end
+function c = ReturnsTrue(varargin)
+c = matlab.unittest.constraints.ReturnsTrue(varargin{:});
+end
+function c = PathFixture(varargin)
+c = matlab.unittest.fixtures.PathFixture(varargin{:});
 end

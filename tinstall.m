@@ -18,8 +18,10 @@ classdef tinstall < matlab.unittest.TestCase
         end
         
         function testFailToCheckoutRestrictedLicense(testCase, restricted)
-            status = license('checkout', restricted);
-            testCase.verifyThat(logical(status), IsFalse, [restricted ' should not checkout']);
+            import matlab.unittest.diagnostics.Diagnostic;
+            
+            [status, msg] = license('checkout', restricted);
+            testCase.verifyThat(logical(status), IsFalse, Diagnostic.join([restricted ' should not checkout'], msg));
         end
         
         function testRootPathMac(testCase)

@@ -18,8 +18,10 @@ classdef tinstall < matlab.unittest.TestCase
         end
         
         function testFailToCheckoutRestrictedLicense(testCase, restricted)
-            status = license('checkout', restricted);
-            testCase.verifyThat(logical(status), IsFalse, [restricted ' should not checkout']);
+            import matlab.unittest.diagnostics.Diagnostic;
+            
+            [status, msg] = license('checkout', restricted);
+            testCase.verifyThat(logical(status), IsFalse, Diagnostic.join([restricted ' should not checkout'], msg));
         end
         
         function testRunExample(testCase, example)
@@ -29,10 +31,22 @@ classdef tinstall < matlab.unittest.TestCase
             startingFigs = findall(groot, 'Type','figure');
             testCase.addTeardown(@() close(setdiff(findall(groot, 'Type','figure'), startingFigs)));
             
-            run(fullfile(meta.componentDir, 'main', meta.main));
+            [log, ex] = evalc('runDemo(fullfile(meta.componentDir, ''main'', meta.main));');
+            if ~isempty(ex)
+                disp(log);
+                rethrow(ex);
+            end
         end
     end
     
+end
+
+function ex = runDemo(demo) %#ok<DEFNU> evalc
+try
+run(demo)
+ex = MException.empty;
+catch ex
+end
 end
 
 % imports

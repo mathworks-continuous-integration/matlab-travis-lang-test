@@ -2,22 +2,21 @@
 
 Repo for testing continuous integration support for MATLAB using Travis CI.
 
-## MATLAB? Using Travis CI?
-Indeed! It all starts with a minimal `.travis.yml` that looks like the following:
+## How it works:
+It all starts with a minimal `.travis.yml` that contains the following code:
 
 ```yaml
 language: matlab
 ```
 
-The minimal configuration will run MATLAB tests in the repo (including subfolders) to determine if they all pass.
+The minimal configuration runs MATLAB tests in the repo (including subfolders) to determine if they all pass.
 
-MATLAB can also be invoked directly if custom commands are desired:
+You also can run custom commands by invoking MATLAB using the `-batch` startup option:
 ```yaml
 language: matlab
 script: |
     matlab -batch "disp("Hello, world!")"
 ```
-_Invoke MATLAB using the '-batch' startup flag when running CI jobs_
 
 ## See also:
 - [Continuous Integration (CI) - MATLAB & Simulink](https://www.mathworks.com/help/matlab/continuous-integration.html)

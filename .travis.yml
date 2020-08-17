@@ -1,12 +1,17 @@
 language: matlab
 
-matlab:
-  - R2020a
-  - latest
-
 matrix:
   include:
     - dist: bionic # 18.04
       os: linux
+      matlab: latest
     - dist: xenial # 16.04
       os: linux
+      matlab: latest
+
+    - dist: bionic # 18.04
+      os: linux
+      matlab: R2020a
+    - dist: xenial # 16.04
+      os: linux
+      matlab: R2020a

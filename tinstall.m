@@ -32,7 +32,7 @@ classdef tinstall < matlab.unittest.TestCase
             testCase.addTeardown(@() close(setdiff(findall(groot, 'Type','figure'), startingFigs)));
             
             [log, ex] = evalc('runDemo(fullfile(meta.componentDir, ''main'', meta.main));');
-            if ~isempty(ex)
+            for ex = ex
                 disp(log);
                 rethrow(ex);
             end

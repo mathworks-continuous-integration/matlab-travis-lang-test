@@ -1,12 +1,5 @@
 language: matlab
 
-os:
-  - linux
-
-dist: 
-  - bionic
-  - xenial
-
 matlab:
   - R2020a
   - latest

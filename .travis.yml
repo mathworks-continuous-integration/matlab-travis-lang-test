@@ -1,4 +1,9 @@
 language: matlab
+
+matlab:
+  - R2020a
+  - latest
+
 matrix:
   include:
     - dist: bionic # 18.04

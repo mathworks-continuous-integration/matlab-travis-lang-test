@@ -1,4 +1,4 @@
-# matlab-travis-lang-test [![Build Status](https://staging.travis-ci.org/mathworks-continuous-integration/matlab-travis-lang-test.svg?branch=master)](https://staging.travis-ci.org/mathworks-continuous-integration/matlab-travis-lang-test)
+# matlab-travis-lang-test [![Build Status](https://travis-ci.com/mathworks-continuous-integration/matlab-travis-lang-test.svg?branch=master)](https://travis-ci.com/mathworks-continuous-integration/matlab-travis-lang-test)
 
 Repo for testing continuous integration support for MATLAB using Travis CI via `language: matlab`.
 
